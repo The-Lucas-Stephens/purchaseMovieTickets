@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Forsight Movies & TV</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="theTop">
+      <h1>Forsight Movies</h1>
+      <h3>Bringing You the Near Future of the Big Screen</h3>
+      <h3>Buy Tickets Here To Experience The Future Yourself!</h3>
+    </div>
+    <div class="centerImg">
+      <img src="gandalf.gif" alt="" id="topGif" />
+    </div>
+    <div id="movies">
+      <h1>{{pageHeader}}</h1>
+      <h1>{{pageHeader2}}</h1>
+      <div id="TheMovies">
+        <div v-for="item in someMovies" class="hoverCard">
+          <moviediv
+            v-bind:overview="item.overview"
+            v-bind:title="item.title"
+            v-bind:imgsrc="item.poster_path"
+            v-bind:ticketdataobj="item"
+            v-bind:content="kidsTicket"
+            v-bind:content2="adultTicket"
+            @boughtchildticket="boughtticket($event)"
+            @boughtadultticket="boughtticket($event)"
+          ></moviediv>
+        </div>
+        <div v-for="ticket in movieData">
+          <h1>Tickets for {{ticket.title}}</h1>
+          <h1 v-if="ticket.adultAmount">
+            You have bought {{ticket.adultAmount}} adult tickets
+          </h1>
+          <h1 v-if="ticket.adultAmount">
+            {{ticket.adultAmount}} X Adult Ticket Price:{{adultPrice}}.00
+          </h1>
+          <h1 v-if="ticket.kidsAmount">
+            You have bought {{ticket.kidsAmount}} kids tickets
+          </h1>
+          <h1 v-if="ticket.kidsAmount">
+            {{ticket.kidsAmount}} X Kids Ticket Price:{{kidsPrice}}.00
+          </h1>
+          <button @click="removeKidsTicket(ticket)">Remove Kids Ticket</button>
+          <button @click="removeAdultTicket(ticket)">
+            Remove Adult Ticket
+          </button>
+          <button @click="removeAll(ticket)">Remove All Tickets</button>
+        </div>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
