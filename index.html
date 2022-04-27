@@ -46,13 +46,13 @@
             You have bought {{ticket.adultAmount}} adult tickets
           </h1>
           <h1 v-if="ticket.adultAmount">
-            {{ticket.adultAmount}} X Adult Ticket Price:{{adultPrice}}.00
+            {{ticket.adultAmount}} X Adult Ticket Price:${{adultPrice}}.00
           </h1>
           <h1 v-if="ticket.kidsAmount">
             You have bought {{ticket.kidsAmount}} kids tickets
           </h1>
           <h1 v-if="ticket.kidsAmount">
-            {{ticket.kidsAmount}} X Kids Ticket Price:{{kidsPrice}}.00
+            {{ticket.kidsAmount}} X Kids Ticket Price:${{kidsPrice}}.00
           </h1>
           <button @click="removeKidsTicket(ticket)" class="btn-danger">Remove Kids Ticket</button>
           <button @click="removeAdultTicket(ticket)" class="btn-danger">
@@ -60,7 +60,12 @@
           </button>
           <button @click="removeAll(ticket)" class="btn-danger">Remove All Tickets</button>
         </div>
+        
       </div>
+      <h1 id="totalCart"></h1>
+      <div id="revealButton">
+      <button @click="revealCart" class="btn-large btn-danger">Show Overall Total</button>
+    </div>
     </div>
 
     <script src="script.js"></script>

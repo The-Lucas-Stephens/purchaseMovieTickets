@@ -97,6 +97,11 @@ Vue.component("ticketButton", {
       adultTicket: "Adult Ticket",
       kidsPrice:7,
       adultPrice:9,
+      totalTickets:0,
+      taxPrice:0.08,
+      taxAmount:0,
+      overAllTotal:0,
+      showToal:0,
       movieData: [],
     },
     //creating methods
@@ -113,6 +118,7 @@ Vue.component("ticketButton", {
             checkThis = true;
             element.kidsAmount = e.kidsCount;
             element.adultAmount = e.adultCount;
+            console.log("Total Tickets: " +this.totalTickets)
           }
         });
         //if the movie doe not exist in the array then the movie obj is added to the array
@@ -155,6 +161,27 @@ Vue.component("ticketButton", {
             element.adultCount = 0;
           }
         });
+      },
+      //method revealing overall total 
+      revealCart(){
+        //variable to temporarly hold amount of tickets 
+        var tempTickets = 0
+        //looping through movie data array and adding to the running count of tickets
+        this.movieData.forEach(element => {
+          tempTickets += element.kidsAmount
+          console.log(element.kidsAmount);
+          tempTickets += element.adultAmount
+          
+        });
+        console.log(tempTickets)
+        //math for the totals
+        this.totalTickets = tempTickets
+        this.taxAmount =this.taxPrice * this.totalTickets
+        this.overAllTotal = this.totalTickets + this.taxAmount
+        //* use of to fixex method on next couple of lines is to limit result to 2 decimal places 
+        this.showTotal=this.overAllTotal.toFixed(2)
+        //printing out results in a h1 tag 
+        document.getElementById('totalCart').innerHTML = "Total Tickets: " +this.totalTickets+" Taxes: " +" $ " + this.taxAmount.toFixed(2) + " Overall Total: " +" $ " +this.showTotal
       },
     },
     //window on load method to load all movies from api into dom when page loads

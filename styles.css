@@ -91,3 +91,8 @@
     background-repeat: no-repeat;
     background-size: cover;
 }
+#revealButton{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
