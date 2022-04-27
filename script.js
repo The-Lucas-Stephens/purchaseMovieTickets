@@ -3,7 +3,7 @@
 //Purpose: Use vue and axios to load api into dom and display inforamtion from json
 //Date 4/8/2022
 //creating view component to stamp out and save writing html
-
+//component for ticket button
 Vue.component("ticketButton", {
     template: `<button @click=clickedBtn type="button" class="btn btn-dark btn-lg">{{placeholder}}</button>`,
     props: ["placeholder"],
