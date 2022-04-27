@@ -54,11 +54,11 @@
           <h1 v-if="ticket.kidsAmount">
             {{ticket.kidsAmount}} X Kids Ticket Price:{{kidsPrice}}.00
           </h1>
-          <button @click="removeKidsTicket(ticket)">Remove Kids Ticket</button>
-          <button @click="removeAdultTicket(ticket)">
+          <button @click="removeKidsTicket(ticket)" class="btn-danger">Remove Kids Ticket</button>
+          <button @click="removeAdultTicket(ticket)" class="btn-danger">
             Remove Adult Ticket
           </button>
-          <button @click="removeAll(ticket)">Remove All Tickets</button>
+          <button @click="removeAll(ticket)" class="btn-danger">Remove All Tickets</button>
         </div>
       </div>
     </div>
