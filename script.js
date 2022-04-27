@@ -7,11 +7,13 @@
 Vue.component("ticketButton", {
     template: `<button @click=clickedBtn type="button" class="btn btn-dark btn-lg">{{placeholder}}</button>`,
     props: ["placeholder"],
+    //data used for the button component 
     data() {
       return {
         btnClicked: 0,
       };
     },
+    //clicked button method that emmits an event that can be used
     methods: {
       clickedBtn() {
         this.btnClicked++;
@@ -20,7 +22,7 @@ Vue.component("ticketButton", {
       },
     },
   });
-  
+  //creating component that can be used to display movie and its info 
   Vue.component("moviediv", {
     template: `<div>
          <img v-bind:src="'https://image.tmdb.org/t/p/original'+imgsrc" alt="" class="movieImg">
@@ -41,29 +43,39 @@ Vue.component("ticketButton", {
       "content2",
       "ticketdataobj",
     ],
+    //movie div component using movie obj from api call and tying it to a variable called ticketdataobj
+    //then binidng it to the other data variable ticketdata so the div can use the movie obj from the api in methods
     data() {
       return {
         ticketdata: this.ticketdataobj,
       };
     },
+    //creating methods for the movie div component 
     methods: {
+      //adding a kids tickets 
       clickKids() {
+        //checking if the property of the object in the array exists if not then it creates the variable and sets it equal to one
         if (this.ticketdata.kidsCount == undefined) {
           this.ticketdata.kidsCount = 1;
+          //if property exists adds one to the running count of kids tickets for the object 
         } else {
           this.ticketdata.kidsCount++;
         }
         console.log(this.ticketdata.kidsCount);
+        //creates event emitter and passes the movie obj as an argument
         this.$emit("boughtchildticket", this.ticketdata);
       },
-  
+      //adding a adult dicket 
       clickAdult() {
+        //checking if property of the object in the array exists if not then it creates the varaible and set it equal to one
         if (this.ticketdata.adultCount == undefined) {
           this.ticketdata.adultCount = 1;
+          //if property exists adds one to the running count of adult tickets for the object 
         } else {
           this.ticketdata.adultCount++;
         }
         console.log(this.ticketdata.adultCount);
+         //creates event emitter and passes the movie obj as an argument
         this.$emit("boughtadultticket", this.ticketdata);
       },
     },
@@ -89,16 +101,22 @@ Vue.component("ticketButton", {
     },
     //creating methods
     methods: {
+      //method that adds the movie data object to the array
+      //takes in an agrument labled in the method as e
       boughtticket(e) {
+        //checker variable
         var checkThis = false;
+        //looping through the movie data array to see if movie exists in the data array based on the title
         this.movieData.forEach((element) => {
+          //if the movie exists it just sets the ticket count of the object equal to the created variabe called ticketype.amount
           if (e.title == element.title) {
             checkThis = true;
             element.kidsAmount = e.kidsCount;
             element.adultAmount = e.adultCount;
           }
         });
-  
+        //if the movie doe not exist in the array then the movie obj is added to the array
+        //a object is created and the properties of the movie are used to store in the array specfically the title,kids ticket amount,and adult ticket amount
         if (checkThis == false) {
           this.movieData.push({
             title: e.title,
@@ -109,24 +127,28 @@ Vue.component("ticketButton", {
   
         console.log(this.movieData);
       },
+      //method that removes a kids ticket 
       removeKidsTicket(ticket) {
         if (ticket.kidsAmount > 0) {
           ticket.kidsAmount--;
         }
       },
-  
+      //method that removes a adult ticket 
       removeAdultTicket(ticket) {
         if (ticket.adultAmount > 0) {
           ticket.adultAmount--;
         }
       },
-  
+      //method that removes all current tickets for the current movie
       removeAll(ticket) {
+        //looping through the array and finds the movie based on the title 
+        //once movie is found removes it from the array 
         for (let i = 0; i < this.movieData.length; i++) {
           if (ticket.title == this.movieData[i].title) {
             this.movieData.splice(i, 1);
           }
         }
+        //once movie is found also also sets all current ticket counts to 0
         this.someMovies.forEach((element) => {
           if (element.title == ticket.title) {
             element.kidsCount = 0;
